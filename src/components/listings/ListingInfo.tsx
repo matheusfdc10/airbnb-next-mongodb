@@ -1,3 +1,5 @@
+'use client'
+
 import useCountries from "@/hooks/useCountries";
 import { SafeUser } from "@/types"
 import { IconType } from "react-icons";

@@ -1,4 +1,3 @@
-'use client';
 
 import { SafeUser } from "@/types";
 import Container from "../Container";
