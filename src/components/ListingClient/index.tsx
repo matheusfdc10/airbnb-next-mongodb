@@ -1,8 +1,7 @@
 'use client'
 
 import { Range } from 'react-date-range'
-import { SafeListing, SafeUser } from "@/types";
-import { Reservation } from "@prisma/client";
+import { SafeListing, SafeReservation, SafeUser } from "@/types";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { categories } from "../Navbar/Categories";
 import Container from "../Container";
@@ -22,7 +21,7 @@ const initialDateRange = {
 }
 
 interface ListingClientProps {
-    reservarions?: Reservation[];
+    reservations?: SafeReservation[];
     listing: SafeListing & {
         user: SafeUser
     };
@@ -30,7 +29,7 @@ interface ListingClientProps {
 }
 
 const ListingClient: React.FC<ListingClientProps> = ({
-    reservarions = [],
+    reservations = [],
     listing,
     currentUser
 }) => {
@@ -40,17 +39,17 @@ const ListingClient: React.FC<ListingClientProps> = ({
     const disabledDates = useMemo(() => {
         let dates: Date[] = []
 
-        reservarions.forEach((reservarion) => {
+        reservations.forEach((reservatrion) => {
             const range = eachDayOfInterval({
-                start: new Date(reservarion.startDate),
-                end: new Date(reservarion.endDate)
+                start: new Date(reservatrion.startDate),
+                end: new Date(reservatrion.endDate)
             })
 
             dates = [...dates, ...range]
         })
 
         return dates;
-    }, [reservarions])
+    }, [reservations])
 
     const [isLoading, setIsLoading] = useState(false);
     const [totalPrice, setTotalPrice] = useState(listing.price)
@@ -72,7 +71,7 @@ const ListingClient: React.FC<ListingClientProps> = ({
         .then(() => {
             toast.success('Listing reservad!');
             setDateRange(initialDateRange)
-            router.refresh()
+            router.push('/trips')
         })
         .catch(() => {
             toast.error('Something went wrong');

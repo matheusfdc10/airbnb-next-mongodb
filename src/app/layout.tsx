@@ -7,6 +7,7 @@ import ToasterProvider from '@/providers/ToasterProvider'
 import LoginModal from '@/components/Modal/LoginModal'
 import getCurrentUser from '@/actions/getCurrentUser'
 import RentModal from '@/components/Modal/RentModal'
+import SearchModal from '@/components/Modal/SearchModal'
 
 export const metadata = {
   title: 'Airbnb',
@@ -21,10 +22,12 @@ const RootLayout = async({
   children: React.ReactNode
 }) => {
   const currentUser = await getCurrentUser();
+
   return (
     <html lang="en">
       <body className={font.className}>
         <ToasterProvider />
+        <SearchModal />
         <RentModal />
         <LoginModal />
         <RegisterModal />
